@@ -40,5 +40,13 @@ namespace Dotnet.Script.Tests
             var projectFileInfo = provider.CreateProject(TestPathUtils.GetPathToTestFixtureFolder("WebApi"), _scriptEnvironment.TargetFramework, true);
             Assert.Equal("Microsoft.NET.Sdk.Web", XDocument.Load(projectFileInfo.Path).Descendants("Project").Single().Attributes("Sdk").Single().Value);
         }
+
+        [Fact]
+        public void ShouldHandleShebangForIssue723()
+        {
+            var provider = new ScriptProjectProvider(TestOutputHelper.CreateTestLogFactory());
+            var projectFileInfo = provider.CreateProject(TestPathUtils.GetPathToTestFixtureFolder("Issue723"), _scriptEnvironment.TargetFramework, true);
+            Assert.Equal("Microsoft.NET.Sdk.Web", XDocument.Load(projectFileInfo.Path).Descendants("Project").Single().Attributes("Sdk").Single().Value);
+        }
     }
 }
